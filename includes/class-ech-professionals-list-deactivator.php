@@ -30,24 +30,11 @@ class Ech_Professionals_List_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-		// Delete VP
-		/* $slug = 'healthcare-professionals/professional-profile';
-		$post = get_page_by_path($slug);
-		if($post) {
-			$pid = $post->ID;
-
-			wp_delete_post($pid, true);
-
-		} else {
-			echo "$slug not found....!";
-		} */
-
         self::deleteVP('healthcare-professionals/professional-profile');
-        self::deleteVP('healthcare-professionals/specialist-categories');
-		
+        self::deleteVP('healthcare-professionals/specialty-categories');
 	}
 
-    private function deleteVP($pageSlug){
+    private static function deleteVP($pageSlug){
         $slug = $pageSlug;
 		$post = get_page_by_path($slug);
 		if($post) {

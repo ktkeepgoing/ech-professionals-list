@@ -46,7 +46,7 @@
             <div class="form_row">
                 <?php $getPPP = get_option( 'ech_pl_ppp' ); ?>
                 <label>Post per page : </label>
-                <input type="text" name="ech_pl_ppp" id="" pattern="[1-9]{1,}" value="<?=$getPPP?>">
+                <input type="text" name="ech_pl_ppp" id="ech_pl_ppp" pattern="[1-9]{1,}" value="<?=$getPPP?>">
             </div>
 
 

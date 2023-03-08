@@ -11,6 +11,12 @@
 			e.stopPropagation();
 		});
 
+		// Change specialty options when clicked dr type
+		$('.ech_dr_filter_container .filter_drType').on('change', function(){
+			var typeID = $(this).val();
+			ECHDr_updateSpecOptions(typeID);
+		});
+
 		// filter submit button
 		$('.ech_dr_filter_container .dr_filter_btn').click(function(){
 		  $(".echdr_filter_dropdown_checkbox").removeClass("echdr_ddc_is_active");
@@ -45,17 +51,19 @@ function ECHDr_load_more_dr(topage) {
   
   
 	var ppp = jQuery(".all_drs_container").data("ppp");  
+
 	var toPage = topage;
   
 	var filterBrand = jQuery(".all_drs_container").data("brandid");
 	var filterChannel = jQuery(".all_drs_container").data("channel");
 	var filterRegion = jQuery(".all_drs_container").data("region");
 	var filterSp = jQuery(".all_drs_container").data("specialty");
+	var filterDrType = jQuery(".all_drs_container").data("drtype");
 	
 	var ajaxurl = jQuery(".ech_dr_pagination").data("ajaxurl");
   
-
 	
+
 	jQuery.ajax({
 	  url: ajaxurl,
 	  type: "post",
@@ -66,16 +74,15 @@ function ECHDr_load_more_dr(topage) {
 		filterBrand: filterBrand,
 		filterRegion: filterRegion,
 		filterSp: filterSp,
+		filterDrType: filterDrType,
 		action: "ECHPL_load_more_dr",
 	  },
 	  success: function (res) {
 		var jsonObj = JSON.parse(res);
-  
+		//console.log(jsonObj);
 		jQuery(".all_drs_container").html(jsonObj.html);      
 		jQuery(".ech_dr_container .loading_div").css("display", "none");
 		jQuery('html, body').animate({ scrollTop: jQuery('.echdr_page_anchor').offset().top }, 0);
-		
-  
 	  },
 	  error: function (res) {
 		console.error(res);
@@ -93,6 +100,7 @@ function ECHDr_load_more_dr(topage) {
 	// get filter value
 	var filter_region_arr = [];  
 	var filter_spec = jQuery(".filter_spec").val();
+	var filter_drType = jQuery(".filter_drType").val();
 	var ppp = jQuery(".all_drs_container").data("ppp");
 	
   
@@ -101,7 +109,7 @@ function ECHDr_load_more_dr(topage) {
 	});
   
 	var filter_region = filter_region_arr.toString();
-	console.log('region: '+ filter_region + ' | spec: ' + filter_spec + ' | ppp: ' + ppp);
+	//console.log('region: '+ filter_region + ' | spec: ' + filter_spec + ' | ppp: ' + ppp);
   
   
 	// clean DOM 
@@ -120,12 +128,13 @@ function ECHDr_load_more_dr(topage) {
 		ppp: ppp,
 		filter_spec: filter_spec,
 		filter_region: filter_region,
+		filter_drType: filter_drType,
 		action: "ECHPL_filter_dr_list",
 	  },
 	  success: function (res) {
 		var jsonObj = JSON.parse(res);
 
-		console.log('max page: ' + jsonObj.max_page);
+		//console.log('max page: ' + jsonObj.max_page);
 		jQuery(".all_drs_container").html(jsonObj.html);
 		jQuery(".ech_dr_container .loading_div").css("display", "none");
   
@@ -134,6 +143,9 @@ function ECHDr_load_more_dr(topage) {
   
 		jQuery(".all_drs_container").data("specialty", filter_spec);
 		jQuery(".all_drs_container").attr("data-specialty", filter_spec);
+
+		jQuery(".all_drs_container").data("drtype", filter_drType);
+		jQuery(".all_drs_container").attr("data-drtype", filter_drType);
 
 		if(jsonObj.max_page > 1) {
 		  jQuery(".ech_dr_pagination").attr("data-max-page", jsonObj.max_page);     
@@ -144,11 +156,29 @@ function ECHDr_load_more_dr(topage) {
 		} else {
 		  jQuery(".ech_dr_pagination").css("display", "none");
 		}
-		
-  
 	  },
 	  error: function (res) {
 		console.error(res);
 	  },
+	});
+  }
+
+
+
+
+  function ECHDr_updateSpecOptions(typeID) {
+	// ajax
+	var ajaxurl = jQuery(".ech_dr_pagination").data("ajaxurl");
+	jQuery(".filter_spec").html('<option value="" disabled selected> loading </option>');
+	jQuery.ajax({
+		url: ajaxurl,
+		type: "post",
+		data: {
+			filter_drType: typeID,
+			action: "ECHPL_update_spec_options",
+		},
+		success: function (res) {
+			jQuery(".filter_spec").html(res);
+		}
 	});
   }

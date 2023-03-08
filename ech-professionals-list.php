@@ -69,7 +69,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-ech-professionals-list.php
 /************* ^^^ Rewrite URL **************/
 add_action('init', function() {
 	add_rewrite_rule('healthcare-professionals\/(professional-profile)\/(\d+[\/]?)$', 'index.php?pagename=healthcare-professionals%2F$matches[1]&therapistid=$matches[2]', 'top');
-	add_rewrite_rule('healthcare-professionals\/(specialist-categories)\/(\d+[\/]?)$', 'index.php?pagename=healthcare-professionals%2F$matches[1]&specialistid=$matches[2]', 'top');
+	add_rewrite_rule('healthcare-professionals\/(specialty-categories)\/(\d+[\/]?)$', 'index.php?pagename=healthcare-professionals%2F$matches[1]&specialtyid=$matches[2]', 'top');
     flush_rewrite_rules();
 });
 
@@ -80,7 +80,7 @@ add_filter('query_vars', function($query_vars) {
 } );
 
 add_filter('query_vars', function($query_vars) {
-    $query_vars[] = 'specialistid';
+    $query_vars[] = 'specialtyid';
     return $query_vars;
 } );
 

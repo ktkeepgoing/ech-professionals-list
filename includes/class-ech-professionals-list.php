@@ -192,6 +192,10 @@ class Ech_Professionals_List {
 
 		$this->loader->add_action( 'wp_ajax_nopriv_ECHPL_filter_dr_list', $plugin_public, 'ECHPL_filter_dr_list' );
 		$this->loader->add_action( 'wp_ajax_ECHPL_filter_dr_list', $plugin_public, 'ECHPL_filter_dr_list' );
+
+		$this->loader->add_action( 'wp_ajax_nopriv_ECHPL_update_spec_options', $plugin_public, 'ECHPL_update_spec_options' );
+		$this->loader->add_action( 'wp_ajax_ECHPL_update_spec_options', $plugin_public, 'ECHPL_update_spec_options' );
+		
 		
 		// ^^^ Add shortcodes
 		$this->loader->add_shortcode( 'ech_pl', $plugin_public, 'echpl_display_profess_list');

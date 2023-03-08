@@ -124,7 +124,7 @@ class Ech_Professionals_List_Admin {
 	public function reg_ech_pl_general_settings() {
 		// Register all settings for general setting page
 		register_setting( 'ech_pl_gen_settings', 'ech_pl_apply_api_env');
-		register_setting( 'ech_pl_ppp', 'ech_pl_ppp');
+		register_setting( 'ech_pl_gen_settings', 'ech_pl_ppp');
 	}
 
 }

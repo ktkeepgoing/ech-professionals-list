@@ -45,12 +45,12 @@ class Ech_Professionals_List_Activator {
 
 		// Create VP
         self::createVP('Healthcare Professional Profile', 'professional-profile', '[dr_profile_output]');
-        self::createVP('Healthcare Professional Categories', 'specialist-categories', '[dr_category_list_output]');		
+        self::createVP('Healthcare Professional Categories', 'specialty-categories', '[dr_category_list_output]');		
 
 	} //activate
 
 
-    private function createVP($pageTitle, $pageSlug, $pageShortcode) {
+    private static function createVP($pageTitle, $pageSlug, $pageShortcode) {
         if ( current_user_can( 'activate_plugins' ) ) {
 			// Get parent page and get its id
 			$get_parent_page = get_page_by_path('healthcare-professionals');
